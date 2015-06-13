@@ -1,4 +1,4 @@
-package br.com.otes06.jobslist.Realm;
+package br.com.otes06.jobslist.GatewayRealm.Realms;
 
 import java.util.Date;
 
