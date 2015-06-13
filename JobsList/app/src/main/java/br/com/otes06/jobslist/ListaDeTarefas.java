@@ -1,37 +1,23 @@
 package br.com.otes06.jobslist;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 
-public class JobsList extends ActionBarActivity {
-
-    private Button buttonListaDeTarefas = null;
+public class ListaDeTarefas extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_jobs_list);
-
-        buttonListaDeTarefas = (Button) findViewById(R.id.buttonListaDeTarefas);
-        buttonListaDeTarefas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ListaDeTarefas.class);
-                startActivity(intent);
-            }
-        });
+        setContentView(R.layout.activity_lista_de_tarefas);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_jobs_list, menu);
+        getMenuInflater().inflate(R.menu.menu_lista_de_tarefas, menu);
         return true;
     }
 
