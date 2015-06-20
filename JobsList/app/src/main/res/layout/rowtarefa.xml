@@ -18,6 +18,15 @@
             android:text="Medium Text"
             android:id="@+id/tituloTarefa"
             android:layout_gravity="left"
+            android:layout_marginTop="5dip"
+            android:textSize="18dip" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:id="@+id/vencimentoTarefa"
             android:layout_marginTop="5dip" />
     </LinearLayout>
 </LinearLayout>

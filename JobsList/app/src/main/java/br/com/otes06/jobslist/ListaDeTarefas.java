@@ -4,16 +4,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.List;
 
 import br.com.otes06.jobslist.GatewayDouble.ListagemDeTarefasGatewayDouble;
-import br.com.otes06.jobslist.GatewayInterface.IListagemDeTarefas;
+import br.com.otes06.jobslist.GatewayInterface.IListagemDeTarefasGateway;
 import br.com.otes06.jobslist.Structs.TarefaStruct;
 
 
@@ -30,7 +26,7 @@ public class ListaDeTarefas extends ActionBarActivity {
 
         this.listView = (ListView) findViewById(R.id.listView);
 
-        IListagemDeTarefas gateway = new ListagemDeTarefasGatewayDouble();
+        IListagemDeTarefasGateway gateway = new ListagemDeTarefasGatewayDouble();
 
         List<TarefaStruct> tarefas = gateway.buscarTodasAsTarefas();
 

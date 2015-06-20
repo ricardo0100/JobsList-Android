@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import br.com.otes06.jobslist.Structs.TarefaStruct;
@@ -35,6 +35,15 @@ public class ListaDeTarefasAdapter extends ArrayAdapter<TarefaStruct> {
 
         TextView tituloView = (TextView) v.findViewById(R.id.tituloTarefa);
         tituloView.setText(tarefa.getTitulo());
+
+        TextView vencimentoView = (TextView) v.findViewById(R.id.vencimentoTarefa);
+
+        String dataFormatada = "";
+        if(tarefa.getVencimento() != null) {
+            dataFormatada = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(tarefa.getVencimento());
+        }
+
+        vencimentoView.setText(dataFormatada);
 
         return v;
     }

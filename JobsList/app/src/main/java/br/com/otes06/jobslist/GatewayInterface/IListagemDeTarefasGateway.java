@@ -4,7 +4,7 @@ import java.util.List;
 
 import br.com.otes06.jobslist.Structs.TarefaStruct;
 
-public interface IListagemDeTarefas {
+public interface IListagemDeTarefasGateway {
 
     List<TarefaStruct> buscarTodasAsTarefas();
 
