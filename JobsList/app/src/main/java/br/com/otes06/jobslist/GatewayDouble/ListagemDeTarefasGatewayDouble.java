@@ -3,10 +3,10 @@ package br.com.otes06.jobslist.GatewayDouble;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.com.otes06.jobslist.GatewayInterface.ListagemDeTarefasInterface;
+import br.com.otes06.jobslist.GatewayInterface.IListagemDeTarefas;
 import br.com.otes06.jobslist.Structs.TarefaStruct;
 
-public class ListagemDeTarefasDouble implements ListagemDeTarefasInterface {
+public class ListagemDeTarefasGatewayDouble implements IListagemDeTarefas {
 
     @Override
     public List<TarefaStruct> buscarTodasAsTarefas() {
@@ -25,4 +25,5 @@ public class ListagemDeTarefasDouble implements ListagemDeTarefasInterface {
     public TarefaStruct buscarPoId(int id) {
         return null;
     }
+
 }

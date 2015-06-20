@@ -2,10 +2,10 @@ package br.com.otes06.jobslist.GatewayRealm;
 
 import java.util.List;
 
-import br.com.otes06.jobslist.GatewayInterface.ListagemDeTarefasInterface;
+import br.com.otes06.jobslist.GatewayInterface.IListagemDeTarefas;
 import br.com.otes06.jobslist.Structs.TarefaStruct;
 
-public class ListagemDeTarefasRealm implements ListagemDeTarefasInterface {
+public class IListagemDeTarefasRealm implements IListagemDeTarefas {
 
     @Override
     public List<TarefaStruct> buscarTodasAsTarefas() {
@@ -16,4 +16,5 @@ public class ListagemDeTarefasRealm implements ListagemDeTarefasInterface {
     public TarefaStruct buscarPoId(int id) {
         return null;
     }
+
 }

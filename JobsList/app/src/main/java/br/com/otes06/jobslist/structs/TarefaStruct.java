@@ -9,6 +9,7 @@ public class TarefaStruct {
     private String titulo;
     private String descricao;
     private Date vencimento;
+    private GrupoStruct grupo = null;
 
     public int getId() {
         return id;
@@ -36,5 +37,13 @@ public class TarefaStruct {
 
     public void setVencimento(Date vencimento) {
         this.vencimento = vencimento;
+    }
+
+    public GrupoStruct getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(GrupoStruct grupo) {
+        this.grupo = grupo;
     }
 }
