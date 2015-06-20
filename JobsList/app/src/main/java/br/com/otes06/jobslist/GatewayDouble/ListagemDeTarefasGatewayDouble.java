@@ -13,9 +13,9 @@ public class ListagemDeTarefasGatewayDouble implements IListagemDeTarefasGateway
     public List<TarefaStruct> buscarTodasAsTarefas() {
         List<TarefaStruct> list = new LinkedList<TarefaStruct>();
 
-        for(int i = 0; i < 20; i++){
+        for(int i = 1; i <= 20; i++){
             TarefaStruct tarefa = new TarefaStruct();
-            tarefa.setTitulo("Título" + i);
+            tarefa.setTitulo("Título " + i);
             tarefa.setVencimento(new Date());
             list.add(tarefa);
         }
@@ -25,7 +25,11 @@ public class ListagemDeTarefasGatewayDouble implements IListagemDeTarefasGateway
 
     @Override
     public TarefaStruct buscarPoId(int id) {
-        return null;
+        TarefaStruct tarefa = new TarefaStruct();
+        tarefa.setTitulo("Título mimimi" + id);
+        tarefa.setVencimento(new Date());
+
+        return tarefa;
     }
 
 }

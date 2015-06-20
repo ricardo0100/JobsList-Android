@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import br.com.otes06.jobslist.Structs.TarefaStruct;
 
@@ -40,7 +41,8 @@ public class ListaDeTarefasAdapter extends ArrayAdapter<TarefaStruct> {
 
         String dataFormatada = "";
         if(tarefa.getVencimento() != null) {
-            dataFormatada = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(tarefa.getVencimento());
+            SimpleDateFormat formater = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US);
+            dataFormatada = formater.format(tarefa.getVencimento());
         }
 
         vencimentoView.setText(dataFormatada);
