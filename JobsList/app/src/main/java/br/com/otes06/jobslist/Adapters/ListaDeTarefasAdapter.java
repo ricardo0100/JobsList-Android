@@ -1,4 +1,4 @@
-package br.com.otes06.jobslist;
+package br.com.otes06.jobslist.Adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
+import br.com.otes06.jobslist.R;
 import br.com.otes06.jobslist.Structs.TarefaStruct;
 
 public class ListaDeTarefasAdapter extends ArrayAdapter<TarefaStruct> {
