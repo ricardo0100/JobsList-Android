@@ -1,9 +1,10 @@
 package br.com.otes06.jobslist;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
-import android.view.MenuItem;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -46,7 +47,15 @@ public class ListaDeTarefas extends Activity {
             }
         });
 
-        getActionBar().setTitle("Hey");
+//        ActionBar actionBar = getActionBar();
+//        actionBar.setDisplayHomeAsUpEnabled(true);
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_lista_de_tarefas, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 }
