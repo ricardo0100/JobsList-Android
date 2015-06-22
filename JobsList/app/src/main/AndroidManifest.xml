@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ListaDeTarefasFragment"
+            android:label="@string/title_activity_lista_de_grupos" >
+        </activity>
     </application>
 
 </manifest>
