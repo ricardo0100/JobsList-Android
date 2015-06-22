@@ -11,9 +11,13 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import br.com.otes06.jobslist.Adapters.ListaDeGruposAdapter;
 import br.com.otes06.jobslist.Adapters.ListaDeTarefasAdapter;
+import br.com.otes06.jobslist.GatewayDouble.ListagemDeGruposGatewayDouble;
 import br.com.otes06.jobslist.GatewayDouble.ListagemDeTarefasGatewayDouble;
+import br.com.otes06.jobslist.GatewayInterface.IListagemDeGruposGateway;
 import br.com.otes06.jobslist.GatewayInterface.IListagemDeTarefasGateway;
+import br.com.otes06.jobslist.Structs.GrupoStruct;
 import br.com.otes06.jobslist.Structs.TarefaStruct;
 
 /**
@@ -49,13 +53,13 @@ public class ListaDeGruposFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_lista_de_grupos, container, false);
-//
-//        ListView listView = (ListView) rootView.findViewById(R.id.listViewTarefas);
-//        IListagemDeTarefasGateway gateway = new ListagemDeTarefasGatewayDouble();
-//        List<TarefaStruct> tarefas = gateway.buscarTodasAsTarefas();
-//
-//        ListaDeTarefasAdapter adapter = new ListaDeTarefasAdapter(listView.getContext(), R.layout.rowtarefa, tarefas);
-//        listView.setAdapter(adapter);
+
+        ListView listView = (ListView) rootView.findViewById(R.id.listViewGrupos);
+        IListagemDeGruposGateway gateway = new ListagemDeGruposGatewayDouble();
+        List<GrupoStruct> grupos = gateway.buscarTodosOsGrupos();
+
+        ListaDeGruposAdapter adapter = new ListaDeGruposAdapter(listView.getContext(), R.layout.rowgrupo, grupos);
+        listView.setAdapter(adapter);
 
         return rootView;
     }
