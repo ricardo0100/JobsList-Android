@@ -46,7 +46,7 @@ public class ListaDeTarefas extends Activity {
             }
         });
 
-        getActionBar().setTitle("Hey");
+        //getActionBar().setTitle("Hey");
 
     }
 }
