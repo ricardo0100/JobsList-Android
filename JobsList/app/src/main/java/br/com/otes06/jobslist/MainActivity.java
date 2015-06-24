@@ -1,18 +1,23 @@
 package br.com.otes06.jobslist;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Activity;
 
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 
 
-public class MainActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class MainActivity extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+    public static final String TAG = "MainActivity";
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -24,10 +29,18 @@ public class MainActivity extends Activity
      */
     private CharSequence mTitle;
 
+
+    public static final String AUTHORITY = "br.com.otes06.jobslist.provider";
+    public static final String ACCOUNT_TYPE = "otes02.herokuapp.com";
+    public static final String ACCOUNT = "dummyaccount";
+    Account account;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        account = CreateSyncAccount(this);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -37,6 +50,19 @@ public class MainActivity extends Activity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+    }
+
+    public static Account CreateSyncAccount(Context context) {
+        Account newAccount = new Account(ACCOUNT, ACCOUNT_TYPE);
+        AccountManager accountManager = (AccountManager) context.getSystemService(ACCOUNT_SERVICE);
+
+        if (accountManager.addAccountExplicitly(newAccount, null, null)) {
+            Log.i(TAG, "newAccount");
+            return newAccount;
+        } else {
+            Log.i(TAG, "nullAccount");
+            return null;
+        }
     }
 
     @Override
@@ -106,7 +132,19 @@ public class MainActivity extends Activity
             return true;
         }
 
+        if (id == R.id.action_example) {
+            sync();
+        }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private void sync() {
+        Log.i(TAG, "onSyncClick");
+        Bundle settingsBundle = new Bundle();
+        settingsBundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
+        settingsBundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+        ContentResolver.requestSync(account, AUTHORITY, settingsBundle);
     }
 
 }
