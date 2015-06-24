@@ -15,6 +15,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 
+import br.com.otes06.jobslist.GatewayRealm.Realms.TarefaRealm;
+import io.realm.Realm;
+
 
 public class MainActivity extends Activity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     public static final String TAG = "MainActivity";
@@ -129,6 +132,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            dropTarefas();
             return true;
         }
 
@@ -137,6 +141,14 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void dropTarefas() {
+        Realm realm = Realm.getInstance(this.getBaseContext());
+        realm.beginTransaction();
+        realm.clear(TarefaRealm.class);
+        realm.commitTransaction();
+        realm.close();
     }
 
     private void sync() {

@@ -27,6 +27,10 @@ public class TarefaStruct {
         return vencimento;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setTitulo(String titulo) {
         this.titulo = titulo;
     }
