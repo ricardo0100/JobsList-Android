@@ -9,7 +9,7 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,12 +17,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ListaDeTarefasFragment"
-            android:label="@string/title_activity_lista_de_grupos" >
-        </activity>
-        <activity
             android:name=".EdicaoTarefaActivity"
-            android:label="@string/title_activity_edicao_tarefa" >
+            android:label="@string/title_activity_edicao_tarefa">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
     </application>
 
