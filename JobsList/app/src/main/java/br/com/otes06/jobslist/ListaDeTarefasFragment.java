@@ -3,10 +3,12 @@ package br.com.otes06.jobslist;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.List;
@@ -44,6 +46,8 @@ public class ListaDeTarefasFragment extends Fragment {
 
     }
 
+    List<TarefaStruct> tarefas;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,10 +56,20 @@ public class ListaDeTarefasFragment extends Fragment {
 
         ListView listView = (ListView) rootView.findViewById(R.id.listViewTarefas);
         IListagemDeTarefasGateway gateway = new ListagemDeTarefasGatewayDouble();
-        List<TarefaStruct> tarefas = gateway.buscarTodasAsTarefas();
+        tarefas = gateway.buscarTodasAsTarefas();
 
-        ListaDeTarefasAdapter adapter = new ListaDeTarefasAdapter(listView.getContext(), R.layout.rowtarefa, tarefas);
+        final ListaDeTarefasAdapter adapter = new ListaDeTarefasAdapter(listView.getContext(), R.layout.rowtarefa, tarefas);
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(view.getContext(), EdicaoTarefaActivity.class);
+                int tarefaID = tarefas.get(position).getId();
+                intent.putExtra("tarefaID", tarefaID);
+                startActivity(intent);
+            }
+        });
 
         return rootView;
     }

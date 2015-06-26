@@ -20,6 +20,10 @@
             android:name=".ListaDeTarefasFragment"
             android:label="@string/title_activity_lista_de_grupos" >
         </activity>
+        <activity
+            android:name=".EdicaoTarefaActivity"
+            android:label="@string/title_activity_edicao_tarefa" >
+        </activity>
     </application>
 
 </manifest>

@@ -15,6 +15,10 @@ public class TarefaStruct {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getTitulo() {
         return titulo;
     }
@@ -46,4 +50,5 @@ public class TarefaStruct {
     public void setGrupo(GrupoStruct grupo) {
         this.grupo = grupo;
     }
+
 }
