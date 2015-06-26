@@ -5,15 +5,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-import br.com.otes06.jobslist.GatewayDouble.ListagemDeGruposGatewayDouble;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import br.com.otes06.jobslist.GatewayDouble.ListagemDeTarefasGatewayDouble;
-import br.com.otes06.jobslist.GatewayInterface.IListagemDeGruposGateway;
 import br.com.otes06.jobslist.GatewayInterface.IListagemDeTarefasGateway;
 import br.com.otes06.jobslist.Structs.TarefaStruct;
 
@@ -25,6 +24,7 @@ public class EdicaoTarefaActivity extends Activity {
     private IListagemDeTarefasGateway tarefaGateway;
 
     private EditText tituloEditText;
+    private EditText vencimentoEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +37,23 @@ public class EdicaoTarefaActivity extends Activity {
         }
 
         configurarStruct();
-        configurarControles();
+
+        this.tituloEditText = (EditText) findViewById(R.id.tituloEditText);
+        this.vencimentoEditText = (EditText) findViewById(R.id.vencimentoEditText);
+        atualizarDados();
 
     }
 
-    private void configurarControles() {
-        this.tituloEditText = (EditText) findViewById(R.id.tituloEditText);
+    private void atualizarDados() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US);
+
         String titulo = this.tarefa.getTitulo();
+        String vencimento = simpleDateFormat.format(this.tarefa.getVencimento());
+
+
         this.tituloEditText.setText(titulo);
+        this.vencimentoEditText.setText(vencimento);
+
     }
 
     private void configurarStruct() {
