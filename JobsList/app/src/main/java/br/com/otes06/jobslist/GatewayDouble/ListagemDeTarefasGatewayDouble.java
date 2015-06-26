@@ -28,7 +28,7 @@ public class ListagemDeTarefasGatewayDouble implements IListagemDeTarefasGateway
     public TarefaStruct buscarPoId(int id) {
         TarefaStruct tarefa = new TarefaStruct();
         tarefa.setId(id);
-        tarefa.setTitulo("Tarefa ID:" + id);
+        tarefa.setTitulo("Tarefa " + id);
         tarefa.setVencimento(new Date());
 
         return tarefa;

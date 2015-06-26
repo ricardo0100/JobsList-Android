@@ -5,8 +5,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import br.com.otes06.jobslist.GatewayDouble.ListagemDeGruposGatewayDouble;
 import br.com.otes06.jobslist.GatewayDouble.ListagemDeTarefasGatewayDouble;
@@ -21,11 +24,30 @@ public class EdicaoTarefaActivity extends Activity {
     private TarefaStruct tarefa = null;
     private IListagemDeTarefasGateway tarefaGateway;
 
+    private EditText tituloEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edicao_tarefa);
 
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        configurarStruct();
+        configurarControles();
+
+    }
+
+    private void configurarControles() {
+        this.tituloEditText = (EditText) findViewById(R.id.tituloEditText);
+        String titulo = this.tarefa.getTitulo();
+        this.tituloEditText.setText(titulo);
+    }
+
+    private void configurarStruct() {
         this.tarefaGateway = new ListagemDeTarefasGatewayDouble(); //TODO
 
         Intent intent = getIntent();
@@ -37,9 +59,6 @@ public class EdicaoTarefaActivity extends Activity {
         } else {
             this.tarefa = this.tarefaGateway.buscarPoId(tarefaID);
         }
-
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     private boolean isNovaTarefa() {
@@ -75,4 +94,5 @@ public class EdicaoTarefaActivity extends Activity {
         intent.putExtra("highlightID", this.tarefaID);
         return intent;
     }
+
 }
