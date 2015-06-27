@@ -46,6 +46,7 @@ public class EdicaoTarefaActivity extends Activity {
     private Button botaoDefinirHora;
     private Spinner grupoSpinner;
     private Switch switchConcluido;
+    private EditText editTextDescricao;
 
     private Calendar vencimento;
     private int position;
@@ -64,6 +65,7 @@ public class EdicaoTarefaActivity extends Activity {
         this.botaoDefinirHora = (Button) findViewById(R.id.buttonDefinirHora);
         this.grupoSpinner = (Spinner) findViewById(R.id.spinnerGrupo);
         this.switchConcluido = (Switch) findViewById(R.id.switchConcluido);
+        this.editTextDescricao = (EditText) findViewById(R.id.editTextDescricao);
 
         carregarSpinnerGrupos();
 
@@ -168,9 +170,9 @@ public class EdicaoTarefaActivity extends Activity {
             }
         });
 
-
         this.switchConcluido.setChecked(this.tarefa.getConcluida());
 
+        this.editTextDescricao.setText(this.tarefa.getDescricao());
     }
 
     private boolean isNovaTarefa() {
@@ -202,6 +204,8 @@ public class EdicaoTarefaActivity extends Activity {
             this.tarefa.setVencimento(this.vencimento.getTime());
             this.tarefa.setGrupo((GrupoStruct) this.grupoSpinner.getSelectedItem());
             this.tarefa.setConcluida(switchConcluido.isChecked());
+            this.tarefa.setDescricao(this.editTextDescricao.getText().toString());
+
             this.tarefaGateway.salvar(this.tarefa);
             NavUtils.navigateUpFromSameTask(this);
         }
