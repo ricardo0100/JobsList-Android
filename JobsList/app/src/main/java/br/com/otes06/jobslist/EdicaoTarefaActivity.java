@@ -202,6 +202,8 @@ public class EdicaoTarefaActivity extends Activity {
             this.tarefa.setVencimento(this.vencimento.getTime());
             this.tarefa.setGrupo((GrupoStruct) this.grupoSpinner.getSelectedItem());
             this.tarefa.setConcluida(switchConcluido.isChecked());
+            this.tarefaGateway.salvar(this.tarefa);
+            NavUtils.navigateUpFromSameTask(this);
         }
     }
 
