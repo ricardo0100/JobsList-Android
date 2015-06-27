@@ -115,5 +115,14 @@
         android:layout_alignRight="@+id/spinnerGrupo"
         android:layout_alignEnd="@+id/spinnerGrupo" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Alarmes"
+        android:id="@+id/buttonAlarmes"
+        android:layout_below="@+id/editTextDescricao"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"/>
+
 
 </RelativeLayout>
