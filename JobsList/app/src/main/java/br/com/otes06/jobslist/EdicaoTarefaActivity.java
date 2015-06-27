@@ -20,6 +20,8 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -43,21 +45,7 @@ public class EdicaoTarefaActivity extends Activity {
     private Button botaoDefinirHora;
     private Spinner grupoSpinner;
 
-    private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
-        @Override
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
-        }
-    };
-
-    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
-
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
-        }
-    };
-
+    private Calendar vencimento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +61,7 @@ public class EdicaoTarefaActivity extends Activity {
         this.botaoDefinirHora = (Button) findViewById(R.id.buttonDefinirHora);
         this.grupoSpinner = (Spinner) findViewById(R.id.spinnerGrupo);
 
-        configurarStruct();
+        carregarDados();
 
         configurarDatePickerVencimento();
         configurarTimePickerVencimento();
@@ -81,32 +69,57 @@ public class EdicaoTarefaActivity extends Activity {
         atualizarDados();
     }
 
+    //DatePickerDialog
     private void configurarDatePickerVencimento() {
         this.botaoDefinirData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(v.getContext(), datePickerListener, 1999, 07, 04).show();
+                new DatePickerDialog(v.getContext(), dateDialogListener(), vencimento.get(Calendar.YEAR), vencimento.get(Calendar.MONTH), vencimento.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
     }
 
+    private DatePickerDialog.OnDateSetListener dateDialogListener() {
+        return new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                vencimento.set(Calendar.YEAR, year);
+                vencimento.set(Calendar.MONTH, monthOfYear);
+                vencimento.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                atualizarLabelVencimento(vencimento.getTime());
+            }
+        };
+    }
+
+    //TimePickerDialog
     private void configurarTimePickerVencimento() {
         this.botaoDefinirHora.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new TimePickerDialog(v.getContext(), timePickerListener, 19, 00, true).show();
+                new TimePickerDialog(v.getContext(), timeDialogListener(), vencimento.get(Calendar.HOUR_OF_DAY), vencimento.get(Calendar.MINUTE), true).show();
             }
         });
     }
 
+    private TimePickerDialog.OnTimeSetListener timeDialogListener() {
+        return new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                vencimento.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                vencimento.set(Calendar.MINUTE, minute);
+                atualizarLabelVencimento(vencimento.getTime());
+            }
+        };
+    }
+
+    private void atualizarLabelVencimento(Date vencimento) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US);
+        this.vencimentoTextView.setText(simpleDateFormat.format(vencimento));
+    }
+
     private void atualizarDados() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US);
-
-        String titulo = this.tarefa.getTitulo();
-        String vencimento = simpleDateFormat.format(this.tarefa.getVencimento());
-
-
-        List<GrupoStruct> list = new LinkedList<GrupoStruct>();
+        List<GrupoStruct> list = new LinkedList<>();
         list.add(GrupoStruct.SemGrupo());
 
         list.addAll(new GruposGatewayDouble().buscarTodosOsGrupos());
@@ -114,19 +127,12 @@ public class EdicaoTarefaActivity extends Activity {
         ArrayAdapter<GrupoStruct> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.grupoSpinner.setAdapter(dataAdapter);
-
-        this.tituloEditText.setText(titulo);
-        this.vencimentoTextView.setText(vencimento);
-
     }
 
 
-
-    private void configurarStruct() {
-        this.tarefaGateway = new TarefasGatewayRealm(this); //TODO
-
+    private void carregarDados() {
+        this.tarefaGateway = new TarefasGatewayRealm(this);
         Intent intent = getIntent();
-
         this.tarefaID = intent.getIntExtra("tarefaID", 0);
 
         if(this.isNovaTarefa()){
@@ -134,6 +140,15 @@ public class EdicaoTarefaActivity extends Activity {
         } else {
             this.tarefa = this.tarefaGateway.buscarPoId(tarefaID);
         }
+
+        //Carrega controles
+        if(this.vencimento == null)
+            this.vencimento = Calendar.getInstance();
+        this.vencimento.setTime(this.tarefa.getVencimento());
+        atualizarLabelVencimento(this.vencimento.getTime());
+
+        this.tituloEditText.setText(this.tarefa.getTitulo());
+
     }
 
     private boolean isNovaTarefa() {
