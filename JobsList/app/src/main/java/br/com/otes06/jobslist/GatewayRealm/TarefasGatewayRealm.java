@@ -54,4 +54,24 @@ public class TarefasGatewayRealm implements IListagemDeTarefasGateway {
         realm.close();
         return tarefa;
     }
+
+    public void salvar(TarefaStruct tarefa) {
+        Realm realm = Realm.getInstance(context);
+        realm.beginTransaction();
+
+        TarefaRealm registro = new TarefaRealm();
+        int id = tarefa.getId();
+        if (id == 0) {
+            int size = ((int) realm.where(TarefaRealm.class).count());
+            id = size + 10000;
+        }
+
+        registro.setId(id);
+        registro.setTitulo(tarefa.getTitulo());
+        registro.setDescricao(tarefa.getDescricao());
+        realm.copyToRealmOrUpdate(registro);
+
+        realm.commitTransaction();
+        realm.close();
+    }
 }
