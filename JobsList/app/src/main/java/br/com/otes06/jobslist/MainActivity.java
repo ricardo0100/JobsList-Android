@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.Toast;
 
+import br.com.otes06.jobslist.GatewayRealm.Realms.AlarmeRealm;
 import br.com.otes06.jobslist.GatewayRealm.Realms.GrupoRealm;
 import br.com.otes06.jobslist.GatewayRealm.Realms.TarefaRealm;
 import io.realm.Realm;
@@ -145,6 +146,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
     private void dropTarefas() {
         Realm realm = Realm.getInstance(this.getBaseContext());
         realm.beginTransaction();
+        realm.clear(AlarmeRealm.class);
         realm.clear(TarefaRealm.class);
         realm.clear(GrupoRealm.class);
         realm.commitTransaction();

@@ -9,8 +9,10 @@ import android.content.SyncResult;
 import android.os.Bundle;
 import android.util.Log;
 
+import br.com.otes06.jobslist.GatewayRealm.AlarmesGatewayRealm;
 import br.com.otes06.jobslist.GatewayRealm.GruposGatewayRealm;
 import br.com.otes06.jobslist.GatewayRealm.TarefasGatewayRealm;
+import br.com.otes06.jobslist.Structs.AlarmeStruct;
 import br.com.otes06.jobslist.Structs.GrupoStruct;
 import br.com.otes06.jobslist.Structs.TarefaStruct;
 
@@ -49,6 +51,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
         buscarGrupos();
         buscarTarefas();
+        buscarAlarmes();
     }
 
     private void buscarGrupos() {
@@ -154,6 +157,61 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                     tarefaStruct.setModified(parseDataString(dataString));
 
                     int id = tarefasGateway.salvar(tarefaStruct);
+                }
+            }
+
+        } catch (JSONException e) {
+            Log.e(TAG, "Erro ao decodificar JSON: " + e.getMessage());
+        }
+    }
+
+    private void buscarAlarmes() {
+        try {
+            AlarmesGatewayRealm alarmesGateway = new AlarmesGatewayRealm(getContext());
+            Boolean repeat = true;
+            String url = "http://otes02.herokuapp.com/api-rest/alarmes/";
+
+            while (repeat) {
+                String response = HttpRequest.get(url).body();
+                JSONObject json = new JSONObject(response);
+                JSONArray results = json.optJSONArray("results");
+                String next = json.getString("next");
+                Log.i(TAG, "next:    " + next);
+                if (next != null && !next.isEmpty() && !next.equals("null")) {
+                    url = next;
+                } else {
+                    repeat = false;
+                    url = null;
+                }
+
+                if (results == null) {
+                    return;
+                }
+
+                Log.i(TAG, "GET response: " + response);
+                Log.i(TAG, "GET json: " + results.toString());
+                Log.i(TAG, "GET json len: " + results.length());
+
+                int len = results.length();
+                for (int i = 0; i < len; i++) {
+                    JSONObject jsonRegistro = results.getJSONObject(i);
+                    Log.i(TAG, "Obj id: " + jsonRegistro.getInt("id"));
+                    Log.i(TAG, "Obj tarefaId: " + jsonRegistro.getString("tarefa"));
+
+                    AlarmeStruct alarmeStruct = new AlarmeStruct();
+                    alarmeStruct.setId(jsonRegistro.getInt("id"));
+                    alarmeStruct.setAtivo(jsonRegistro.getBoolean("ativo"));
+                    alarmeStruct.setUsuarioId(jsonRegistro.optInt("usuario", 0));
+                    alarmeStruct.setTarefaId(jsonRegistro.optInt("tarefa", 0));
+
+                    String dataString = jsonRegistro.getString("horario");
+                    alarmeStruct.setHorario(parseDataString(dataString));
+                    dataString = jsonRegistro.getString("created");
+                    alarmeStruct.setCreated(parseDataString(dataString));
+                    dataString = jsonRegistro.getString("modified");
+                    alarmeStruct.setModified(parseDataString(dataString));
+
+                    int id = alarmesGateway.salvar(alarmeStruct);
                 }
             }
 
