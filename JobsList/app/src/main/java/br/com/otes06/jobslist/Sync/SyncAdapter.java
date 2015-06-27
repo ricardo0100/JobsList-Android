@@ -16,6 +16,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 
 public class SyncAdapter extends AbstractThreadedSyncAdapter {
     public static final String TAG = "SyncAdapter";
@@ -85,6 +91,14 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                     tarefaStruct.setConcluida(jsonRegistro.getBoolean("concluida"));
                     tarefaStruct.setGrupoId(jsonRegistro.optInt("grupo", 0));
                     tarefaStruct.setUsuarioId(jsonRegistro.optInt("usuario", 0));
+
+                    String dataString = jsonRegistro.getString("vencimento");
+                    tarefaStruct.setVencimento(parseDataString(dataString));
+                    dataString = jsonRegistro.getString("created");
+                    tarefaStruct.setCreated(parseDataString(dataString));
+                    dataString = jsonRegistro.getString("modified");
+                    tarefaStruct.setModified(parseDataString(dataString));
+
                     int id = tarefasGateway.salvar(tarefaStruct);
                 }
             }
@@ -95,5 +109,20 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
 //        int size = ((int) realm.where(TarefaRealm.class).count());
 //        int nextID = (int) (realm.where(TarefaRealm.class).maximumInt("id") + 1);
+    }
+
+    private Date parseDataString(String dataString) {
+        if (!dataString.equals("null")) {
+            try {
+                DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US);
+                Date data = df1.parse(dataString.substring(0,18));
+                Log.i(TAG, data.toString());
+                return data;
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        return null;
     }
 }
