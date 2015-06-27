@@ -9,6 +9,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -126,7 +127,19 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
+            int position = mNavigationDrawerFragment.getmCurrentSelectedPosition();
+            switch (position){
+                case 0:
+                    getMenuInflater().inflate(R.menu.menu_lista_de_tarefas, menu);
+                    break;
+                case 1:
+                    getMenuInflater().inflate(R.menu.menu_lista_de_grupos, menu);
+                    break;
+                default:
+                    getMenuInflater().inflate(R.menu.main, menu);
+                    break;
+            }
+
             restoreActionBar();
             return true;
         }
@@ -139,6 +152,14 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+
+        if (item.getItemId() == R.id.action_nova_tarefa) {
+            Intent intent = new Intent(this, EdicaoTarefaActivity.class);
+            intent.putExtra("tarefaID", 0);
+            startActivity(intent);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

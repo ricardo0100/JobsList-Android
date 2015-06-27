@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="br.com.otes06.jobslist.ListaDeTarefasFragment">
-    <item android:id="@+id/action_example" android:title="@string/nova_tarefa"
+    <item android:id="@+id/action_nova_tarefa" android:title="@string/nova_tarefa"
         android:showAsAction="withText|ifRoom" />
 </menu>

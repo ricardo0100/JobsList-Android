@@ -77,7 +77,7 @@ public class NavigationDrawerFragment extends Fragment {
         }
 
         // Select either the default item (0) or the last selected item.
-        selectItem(mCurrentSelectedPosition);
+        selectItem(getmCurrentSelectedPosition());
     }
 
     @Override
@@ -112,7 +112,7 @@ public class NavigationDrawerFragment extends Fragment {
                         "Sync",
                         "Drop DB"
                 }));
-        mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
+        mDrawerListView.setItemChecked(getmCurrentSelectedPosition(), true);
         return layout;
     }
 
@@ -226,7 +226,7 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition);
+        outState.putInt(STATE_SELECTED_POSITION, getmCurrentSelectedPosition());
     }
 
     @Override
@@ -253,11 +253,6 @@ public class NavigationDrawerFragment extends Fragment {
             return true;
         }
 
-        if (item.getItemId() == R.id.action_example) {
-            Toast.makeText(getActivity(), "Syncronizing.", Toast.LENGTH_SHORT).show();
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -274,6 +269,10 @@ public class NavigationDrawerFragment extends Fragment {
 
     private ActionBar getActionBar() {
         return getActivity().getActionBar();
+    }
+
+    public int getmCurrentSelectedPosition() {
+        return mCurrentSelectedPosition;
     }
 
     /**
