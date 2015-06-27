@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -38,14 +39,16 @@ public class EdicaoTarefaActivity extends Activity {
     private int tarefaID;
     private TarefaStruct tarefa = null;
     private ITarefasGateway tarefaGateway;
-    
+
     private EditText tituloEditText;
     private TextView vencimentoTextView;
     private Button botaoDefinirData;
     private Button botaoDefinirHora;
     private Spinner grupoSpinner;
+    private Switch switchConcluido;
 
     private Calendar vencimento;
+    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +63,15 @@ public class EdicaoTarefaActivity extends Activity {
         this.botaoDefinirData = (Button) findViewById(R.id.buttonDefinirData);
         this.botaoDefinirHora = (Button) findViewById(R.id.buttonDefinirHora);
         this.grupoSpinner = (Spinner) findViewById(R.id.spinnerGrupo);
+        this.switchConcluido = (Switch) findViewById(R.id.switchConcluido);
+
+        carregarSpinnerGrupos();
 
         carregarDados();
 
         configurarDatePickerVencimento();
         configurarTimePickerVencimento();
 
-        atualizarDados();
     }
 
     //DatePickerDialog
@@ -118,7 +123,7 @@ public class EdicaoTarefaActivity extends Activity {
         this.vencimentoTextView.setText(simpleDateFormat.format(vencimento));
     }
 
-    private void atualizarDados() {
+    private void carregarSpinnerGrupos() {
         List<GrupoStruct> list = new LinkedList<>();
         list.add(GrupoStruct.SemGrupo());
 
@@ -135,19 +140,36 @@ public class EdicaoTarefaActivity extends Activity {
         Intent intent = getIntent();
         this.tarefaID = intent.getIntExtra("tarefaID", 0);
 
-        if(this.isNovaTarefa()){
+        if (this.isNovaTarefa()) {
             this.tarefa = new TarefaStruct();
         } else {
             this.tarefa = this.tarefaGateway.buscarPoId(tarefaID);
         }
 
         //Carrega controles
-        if(this.vencimento == null)
+        this.tituloEditText.setText(this.tarefa.getTitulo());
+
+        if (this.vencimento == null)
             this.vencimento = Calendar.getInstance();
         this.vencimento.setTime(this.tarefa.getVencimento());
         atualizarLabelVencimento(this.vencimento.getTime());
 
-        this.tituloEditText.setText(this.tarefa.getTitulo());
+        this.position = 0;
+        for (int i = 0; i < this.grupoSpinner.getCount(); i++) {
+            if (((GrupoStruct) this.grupoSpinner.getItemAtPosition(i)).getId() == this.tarefa.getGrupoId()) {
+                this.position = i;
+                break;
+            }
+        }
+        this.grupoSpinner.post(new Runnable() {
+            @Override
+            public void run() {
+                grupoSpinner.setSelection(position);
+            }
+        });
+
+
+        this.switchConcluido.setChecked(this.tarefa.getConcluida());
 
     }
 
@@ -175,13 +197,16 @@ public class EdicaoTarefaActivity extends Activity {
     }
 
     private void salvarTarefa() {
-        if(validarDados()){
-            Toast.makeText(this,"Salvar Tarefa Não Implementado", Toast.LENGTH_SHORT).show();
+        if (validarDados()) {
+            this.tarefa.setTitulo(this.tituloEditText.getText().toString());
+            this.tarefa.setVencimento(this.vencimento.getTime());
+            this.tarefa.setGrupo((GrupoStruct) this.grupoSpinner.getSelectedItem());
+            this.tarefa.setConcluida(switchConcluido.isChecked());
         }
     }
 
     private boolean validarDados() {
-        if(this.tituloEditText.getText().toString().equals("")){
+        if (this.tituloEditText.getText().toString().equals("")) {
             this.tituloEditText.setError("Digite um título para a tarefa");
             return false;
         }
