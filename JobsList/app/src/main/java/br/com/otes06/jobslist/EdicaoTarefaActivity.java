@@ -48,6 +48,7 @@ public class EdicaoTarefaActivity extends Activity {
     private Spinner grupoSpinner;
     private Switch switchConcluido;
     private EditText editTextDescricao;
+    private Button buttonAlarmes;
 
     private Calendar vencimento;
     private int position;
@@ -67,14 +68,28 @@ public class EdicaoTarefaActivity extends Activity {
         this.grupoSpinner = (Spinner) findViewById(R.id.spinnerGrupo);
         this.switchConcluido = (Switch) findViewById(R.id.switchConcluido);
         this.editTextDescricao = (EditText) findViewById(R.id.editTextDescricao);
+        this.buttonAlarmes = (Button) findViewById(R.id.buttonAlarmes);
 
         carregarSpinnerGrupos();
 
+        carregarDados();
         carregarDados();
 
         configurarDatePickerVencimento();
         configurarTimePickerVencimento();
 
+        configurarBotaoAlarmes();
+    }
+
+    private void configurarBotaoAlarmes() {
+        this.buttonAlarmes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), AlarmesActivity.class);
+                intent.putExtra("tarefaID", tarefa.getId());
+                startActivity(intent);
+            }
+        });
     }
 
     //DatePickerDialog

@@ -2,56 +2,72 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.otes06.jobslist" >
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
-    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
-    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main">
+            android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".EdicaoTarefaActivity"
-            android:label="@string/title_activity_edicao_tarefa">
+            android:label="@string/title_activity_edicao_tarefa" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <service
-            android:name="br.com.otes06.jobslist.Sync.AuthenticatorService">
+
+        <activity
+            android:name=".AlarmesActivity"
+            android:label="@string/title_activity_alarmes" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".EdicaoTarefaActivity" />
+        </activity>
+
+        <service android:name=".Sync.AuthenticatorService" >
             <intent-filter>
-                <action android:name="android.accounts.AccountAuthenticator"/>
+                <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
+
             <meta-data
                 android:name="android.accounts.AccountAuthenticator"
                 android:resource="@xml/authenticator" />
         </service>
+
         <provider
-            android:name="br.com.otes06.jobslist.Sync.StubProvider"
+            android:name=".Sync.StubProvider"
             android:authorities="br.com.otes06.jobslist.provider"
             android:exported="false"
-            android:syncable="true"/>
+            android:syncable="true" />
+
         <service
-            android:name="br.com.otes06.jobslist.Sync.SyncService"
+            android:name=".Sync.SyncService"
             android:exported="true"
-            android:process=":sync">
+            android:process=":sync" >
             <intent-filter>
-                <action android:name="android.content.SyncAdapter"/>
+                <action android:name="android.content.SyncAdapter" />
             </intent-filter>
-            <meta-data android:name="android.content.SyncAdapter"
+
+            <meta-data
+                android:name="android.content.SyncAdapter"
                 android:resource="@xml/syncadapter" />
         </service>
+
     </application>
 
 </manifest>
