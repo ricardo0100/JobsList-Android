@@ -4,18 +4,24 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Locale;
 
+import br.com.otes06.jobslist.GatewayDouble.ListagemDeGruposGatewayDouble;
 import br.com.otes06.jobslist.GatewayDouble.ListagemDeTarefasGatewayDouble;
 import br.com.otes06.jobslist.GatewayInterface.IListagemDeTarefasGateway;
+import br.com.otes06.jobslist.Structs.GrupoStruct;
 import br.com.otes06.jobslist.Structs.TarefaStruct;
 
 
@@ -27,6 +33,7 @@ public class EdicaoTarefaActivity extends Activity {
 
     private EditText tituloEditText;
     private EditText vencimentoEditText;
+    private Spinner grupoSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +48,9 @@ public class EdicaoTarefaActivity extends Activity {
 
         this.tituloEditText = (EditText) findViewById(R.id.tituloEditText);
         this.vencimentoEditText = (EditText) findViewById(R.id.vencimentoEditText);
-        atualizarDados();
+        this.grupoSpinner = (Spinner) findViewById(R.id.spinnerGrupo);
 
+        atualizarDados();
     }
 
     private void atualizarDados() {
@@ -51,6 +59,15 @@ public class EdicaoTarefaActivity extends Activity {
         String titulo = this.tarefa.getTitulo();
         String vencimento = simpleDateFormat.format(this.tarefa.getVencimento());
 
+
+        List<GrupoStruct> list = new LinkedList<GrupoStruct>();
+        list.add(GrupoStruct.SemGrupo());
+
+        list.addAll(new ListagemDeGruposGatewayDouble().buscarTodosOsGrupos());
+
+        ArrayAdapter<GrupoStruct> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, list);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        this.grupoSpinner.setAdapter(dataAdapter);
 
         this.tituloEditText.setText(titulo);
         this.vencimentoEditText.setText(vencimento);
@@ -88,7 +105,8 @@ public class EdicaoTarefaActivity extends Activity {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
-
+            case R.id.action_salvarTarefa:
+                Toast.makeText(this, "Hey!", Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }

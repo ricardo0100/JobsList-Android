@@ -1,9 +1,9 @@
 package br.com.otes06.jobslist.Structs;
 
-/**
- * Created by ricardo on 20/06/15.
- */
 public class GrupoStruct {
+
+    private int id;
+
     private String nome;
 
     public String getNome() {
@@ -12,5 +12,24 @@ public class GrupoStruct {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public static GrupoStruct SemGrupo() {
+        GrupoStruct grupo = new GrupoStruct();
+        grupo.setNome("Sem Grupo");
+        return grupo;
+    }
+
+    @Override
+    public String toString() {
+        return getNome();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

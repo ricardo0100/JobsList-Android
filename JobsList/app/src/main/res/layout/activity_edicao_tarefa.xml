@@ -54,17 +54,20 @@
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner"
-        android:layout_centerHorizontal="true"
+        android:id="@+id/spinnerGrupo"
         android:layout_marginTop="30dp"
-        android:layout_below="@+id/vencimentoEditText" />
+        android:layout_below="@+id/vencimentoEditText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/vencimentoEditText"
+        android:layout_alignEnd="@+id/vencimentoEditText" />
 
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Concluido"
         android:id="@+id/switchConcluido"
-        android:layout_below="@+id/spinner"
+        android:layout_below="@+id/spinnerGrupo"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="30dp"
