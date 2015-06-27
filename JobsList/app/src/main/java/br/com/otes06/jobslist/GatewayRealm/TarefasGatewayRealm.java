@@ -25,12 +25,18 @@ public class TarefasGatewayRealm implements ITarefasGateway {
         List<TarefaRealm> registros = realm.where(TarefaRealm.class).findAll();
         List<TarefaStruct> tarefas = new ArrayList<TarefaStruct>();
 
+        TarefaStruct tarefa;
         for (TarefaRealm registro : registros) {
-            TarefaStruct tarefa = new TarefaStruct();
+            tarefa = new TarefaStruct();
             tarefa.setId(registro.getId());
             tarefa.setTitulo(registro.getTitulo());
             tarefa.setDescricao(registro.getDescricao());
+            tarefa.setConcluida(registro.getConcluida());
+            tarefa.setGrupoId(registro.getGrupoId());
+            tarefa.setUsuarioId(registro.getUsuarioId());
             tarefa.setVencimento(registro.getVencimento());
+            tarefa.setCreated(registro.getCreated());
+            tarefa.setModified(registro.getModified());
             tarefas.add(tarefa);
         }
 
@@ -49,7 +55,12 @@ public class TarefasGatewayRealm implements ITarefasGateway {
         tarefa.setId(registro.getId());
         tarefa.setTitulo(registro.getTitulo());
         tarefa.setDescricao(registro.getDescricao());
+        tarefa.setConcluida(registro.getConcluida());
+        tarefa.setGrupoId(registro.getGrupoId());
+        tarefa.setUsuarioId(registro.getUsuarioId());
         tarefa.setVencimento(registro.getVencimento());
+        tarefa.setCreated(registro.getCreated());
+        tarefa.setModified(registro.getModified());
 
         realm.close();
         return tarefa;
@@ -59,17 +70,23 @@ public class TarefasGatewayRealm implements ITarefasGateway {
         Realm realm = Realm.getInstance(context);
         realm.beginTransaction();
 
-        TarefaRealm registro = new TarefaRealm();
         if (tarefa.getId() == 0) {
             int size = ((int) realm.where(TarefaRealm.class).count());
             tarefa.setId(size + 10000);
         }
 
+        TarefaRealm registro = new TarefaRealm();
         registro.setId(tarefa.getId());
         registro.setTitulo(tarefa.getTitulo());
         registro.setDescricao(tarefa.getDescricao());
-        realm.copyToRealmOrUpdate(registro);
+        registro.setConcluida(tarefa.getConcluida());
+        registro.setGrupoId(tarefa.getUsuarioId());
+        registro.setUsuarioId(tarefa.getUsuarioId());
+        registro.setVencimento(tarefa.getVencimento());
+        registro.setCreated(tarefa.getCreated());
+        registro.setModified(tarefa.getModified());
 
+        realm.copyToRealmOrUpdate(registro);
         realm.commitTransaction();
         realm.close();
 
