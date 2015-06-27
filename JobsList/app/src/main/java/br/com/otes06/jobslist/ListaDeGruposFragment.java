@@ -14,6 +14,7 @@ import java.util.List;
 import br.com.otes06.jobslist.Adapters.ListaDeGruposAdapter;
 import br.com.otes06.jobslist.GatewayDouble.GruposGatewayDouble;
 import br.com.otes06.jobslist.GatewayInterface.IGruposGateway;
+import br.com.otes06.jobslist.GatewayRealm.GruposGatewayRealm;
 import br.com.otes06.jobslist.Structs.GrupoStruct;
 
 /**
@@ -51,7 +52,7 @@ public class ListaDeGruposFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_lista_de_grupos, container, false);
 
         ListView listView = (ListView) rootView.findViewById(R.id.listViewGrupos);
-        IGruposGateway gateway = new GruposGatewayDouble();
+        IGruposGateway gateway = new GruposGatewayRealm(listView.getContext());
         List<GrupoStruct> grupos = gateway.buscarTodosOsGrupos();
 
         ListaDeGruposAdapter adapter = new ListaDeGruposAdapter(listView.getContext(), R.layout.rowgrupo, grupos);

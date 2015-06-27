@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.Toast;
 
+import br.com.otes06.jobslist.GatewayRealm.Realms.GrupoRealm;
 import br.com.otes06.jobslist.GatewayRealm.Realms.TarefaRealm;
 import io.realm.Realm;
 
@@ -143,15 +144,6 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
             return true;
         }
 
-//        if (id == R.id.action_settings) {
-//            dropTarefas();
-//            return true;
-//        }
-
-//        if (id == R.id.action_example) {
-//            sync();
-//        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -159,6 +151,7 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
         Realm realm = Realm.getInstance(this.getBaseContext());
         realm.beginTransaction();
         realm.clear(TarefaRealm.class);
+        realm.clear(GrupoRealm.class);
         realm.commitTransaction();
         realm.close();
     }
