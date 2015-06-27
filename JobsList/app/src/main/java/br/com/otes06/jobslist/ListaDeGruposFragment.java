@@ -12,13 +12,9 @@ import android.widget.ListView;
 import java.util.List;
 
 import br.com.otes06.jobslist.Adapters.ListaDeGruposAdapter;
-import br.com.otes06.jobslist.Adapters.ListaDeTarefasAdapter;
-import br.com.otes06.jobslist.GatewayDouble.ListagemDeGruposGatewayDouble;
-import br.com.otes06.jobslist.GatewayDouble.ListagemDeTarefasGatewayDouble;
-import br.com.otes06.jobslist.GatewayInterface.IListagemDeGruposGateway;
-import br.com.otes06.jobslist.GatewayInterface.IListagemDeTarefasGateway;
+import br.com.otes06.jobslist.GatewayDouble.GruposGatewayDouble;
+import br.com.otes06.jobslist.GatewayInterface.IGruposGateway;
 import br.com.otes06.jobslist.Structs.GrupoStruct;
-import br.com.otes06.jobslist.Structs.TarefaStruct;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -55,7 +51,7 @@ public class ListaDeGruposFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_lista_de_grupos, container, false);
 
         ListView listView = (ListView) rootView.findViewById(R.id.listViewGrupos);
-        IListagemDeGruposGateway gateway = new ListagemDeGruposGatewayDouble();
+        IGruposGateway gateway = new GruposGatewayDouble();
         List<GrupoStruct> grupos = gateway.buscarTodosOsGrupos();
 
         ListaDeGruposAdapter adapter = new ListaDeGruposAdapter(listView.getContext(), R.layout.rowgrupo, grupos);

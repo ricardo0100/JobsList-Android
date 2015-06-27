@@ -15,10 +15,6 @@ public class TarefaStruct {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getTitulo() {
         return titulo;
     }
@@ -29,6 +25,10 @@ public class TarefaStruct {
 
     public Date getVencimento() {
         return vencimento;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public void setTitulo(String titulo) {

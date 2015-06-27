@@ -1,17 +1,15 @@
 package br.com.otes06.jobslist.GatewayDouble;
 
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.com.otes06.jobslist.GatewayInterface.IListagemDeGruposGateway;
+import br.com.otes06.jobslist.GatewayInterface.IGruposGateway;
 import br.com.otes06.jobslist.Structs.GrupoStruct;
-import br.com.otes06.jobslist.Structs.TarefaStruct;
 
 /**
  * Created by ricardo on 21/06/15.
  */
-public class ListagemDeGruposGatewayDouble implements IListagemDeGruposGateway{
+public class GruposGatewayDouble implements IGruposGateway {
     @Override
     public List<GrupoStruct> buscarTodosOsGrupos() {
         List<GrupoStruct> list = new LinkedList<GrupoStruct>();

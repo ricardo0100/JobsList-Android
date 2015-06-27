@@ -14,8 +14,8 @@ import android.widget.ListView;
 import java.util.List;
 
 import br.com.otes06.jobslist.Adapters.ListaDeTarefasAdapter;
-import br.com.otes06.jobslist.GatewayDouble.ListagemDeTarefasGatewayDouble;
-import br.com.otes06.jobslist.GatewayInterface.IListagemDeTarefasGateway;
+import br.com.otes06.jobslist.GatewayInterface.ITarefasGateway;
+import br.com.otes06.jobslist.GatewayRealm.TarefasGatewayRealm;
 import br.com.otes06.jobslist.Structs.TarefaStruct;
 
 /**
@@ -55,7 +55,7 @@ public class ListaDeTarefasFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_lista_de_tarefas, container, false);
 
         ListView listView = (ListView) rootView.findViewById(R.id.listViewTarefas);
-        IListagemDeTarefasGateway gateway = new ListagemDeTarefasGatewayDouble();
+        ITarefasGateway gateway = new TarefasGatewayRealm(listView.getContext());
         tarefas = gateway.buscarTodasAsTarefas();
 
         final ListaDeTarefasAdapter adapter = new ListaDeTarefasAdapter(listView.getContext(), R.layout.rowtarefa, tarefas);
