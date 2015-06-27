@@ -109,7 +109,6 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
         actionBar.setTitle(mTitle);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
@@ -131,14 +130,18 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            dropTarefas();
+        if (id == R.id.action_salvarTarefa) {
             return true;
         }
 
-        if (id == R.id.action_example) {
-            sync();
-        }
+//        if (id == R.id.action_settings) {
+//            dropTarefas();
+//            return true;
+//        }
+
+//        if (id == R.id.action_example) {
+//            sync();
+//        }
 
         return super.onOptionsItemSelected(item);
     }

@@ -1,17 +1,15 @@
 <resources>
     <string name="app_name">JobsList</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+
     <string name="title_activity_lista_de_tarefas">Lista de Tarefas</string>
     <string name="title_activity_lista_de_grupos">Lista de Grupos</string>
+    <string name="title_activity_edicao_tarefa">Editar de Tarefa</string>
     <string name="title_activity_main">JobsList</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_example">Example action</string>
-
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nova_tarefa">Nova Tarefa</string>
+    <string name="action_salvar_tarefa">Salvar Tarefa</string>
 </resources>
