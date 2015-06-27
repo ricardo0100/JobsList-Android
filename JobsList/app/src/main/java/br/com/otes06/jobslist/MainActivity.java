@@ -138,20 +138,6 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_salvarTarefa) {
-            return true;
-        }
-
-//        if (id == R.id.action_settings) {
-//            dropTarefas();
-//            return true;
-//        }
-
-//        if (id == R.id.action_example) {
-//            sync();
-//        }
-
         return super.onOptionsItemSelected(item);
     }
 
