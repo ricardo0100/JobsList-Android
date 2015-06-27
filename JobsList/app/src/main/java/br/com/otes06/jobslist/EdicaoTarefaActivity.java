@@ -15,11 +15,14 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -36,28 +39,17 @@ public class EdicaoTarefaActivity extends Activity {
     private int tarefaID;
     private TarefaStruct tarefa = null;
     private ITarefasGateway tarefaGateway;
-    
+
     private EditText tituloEditText;
     private TextView vencimentoTextView;
     private Button botaoDefinirData;
     private Button botaoDefinirHora;
     private Spinner grupoSpinner;
+    private Switch switchConcluido;
+    private EditText editTextDescricao;
 
-    private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
-        @Override
-        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
-        }
-    };
-
-    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
-
-        @Override
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-
-        }
-    };
-
+    private Calendar vencimento;
+    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,41 +64,69 @@ public class EdicaoTarefaActivity extends Activity {
         this.botaoDefinirData = (Button) findViewById(R.id.buttonDefinirData);
         this.botaoDefinirHora = (Button) findViewById(R.id.buttonDefinirHora);
         this.grupoSpinner = (Spinner) findViewById(R.id.spinnerGrupo);
+        this.switchConcluido = (Switch) findViewById(R.id.switchConcluido);
+        this.editTextDescricao = (EditText) findViewById(R.id.editTextDescricao);
 
-        configurarStruct();
+        carregarSpinnerGrupos();
+
+        carregarDados();
 
         configurarDatePickerVencimento();
         configurarTimePickerVencimento();
 
-        atualizarDados();
     }
 
+    //DatePickerDialog
     private void configurarDatePickerVencimento() {
         this.botaoDefinirData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(v.getContext(), datePickerListener, 1999, 07, 04).show();
+                new DatePickerDialog(v.getContext(), dateDialogListener(), vencimento.get(Calendar.YEAR), vencimento.get(Calendar.MONTH), vencimento.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
     }
 
+    private DatePickerDialog.OnDateSetListener dateDialogListener() {
+        return new DatePickerDialog.OnDateSetListener() {
+
+            @Override
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                vencimento.set(Calendar.YEAR, year);
+                vencimento.set(Calendar.MONTH, monthOfYear);
+                vencimento.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                atualizarLabelVencimento(vencimento.getTime());
+            }
+        };
+    }
+
+    //TimePickerDialog
     private void configurarTimePickerVencimento() {
         this.botaoDefinirHora.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new TimePickerDialog(v.getContext(), timePickerListener, 19, 00, true).show();
+                new TimePickerDialog(v.getContext(), timeDialogListener(), vencimento.get(Calendar.HOUR_OF_DAY), vencimento.get(Calendar.MINUTE), true).show();
             }
         });
     }
 
-    private void atualizarDados() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US);
+    private TimePickerDialog.OnTimeSetListener timeDialogListener() {
+        return new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                vencimento.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                vencimento.set(Calendar.MINUTE, minute);
+                atualizarLabelVencimento(vencimento.getTime());
+            }
+        };
+    }
 
-        String titulo = this.tarefa.getTitulo();
-        String vencimento = simpleDateFormat.format(this.tarefa.getVencimento());
+    private void atualizarLabelVencimento(Date vencimento) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US);
+        this.vencimentoTextView.setText(simpleDateFormat.format(vencimento));
+    }
 
-
-        List<GrupoStruct> list = new LinkedList<GrupoStruct>();
+    private void carregarSpinnerGrupos() {
+        List<GrupoStruct> list = new LinkedList<>();
         list.add(GrupoStruct.SemGrupo());
 
         list.addAll(new GruposGatewayDouble().buscarTodosOsGrupos());
@@ -114,26 +134,45 @@ public class EdicaoTarefaActivity extends Activity {
         ArrayAdapter<GrupoStruct> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.grupoSpinner.setAdapter(dataAdapter);
-
-        this.tituloEditText.setText(titulo);
-        this.vencimentoTextView.setText(vencimento);
-
     }
 
 
-
-    private void configurarStruct() {
-        this.tarefaGateway = new TarefasGatewayRealm(this); //TODO
-
+    private void carregarDados() {
+        this.tarefaGateway = new TarefasGatewayRealm(this);
         Intent intent = getIntent();
-
         this.tarefaID = intent.getIntExtra("tarefaID", 0);
 
-        if(this.isNovaTarefa()){
+        if (this.isNovaTarefa()) {
             this.tarefa = new TarefaStruct();
         } else {
             this.tarefa = this.tarefaGateway.buscarPoId(tarefaID);
         }
+
+        //Carrega controles
+        this.tituloEditText.setText(this.tarefa.getTitulo());
+
+        if (this.vencimento == null)
+            this.vencimento = Calendar.getInstance();
+        this.vencimento.setTime(this.tarefa.getVencimento());
+        atualizarLabelVencimento(this.vencimento.getTime());
+
+        this.position = 0;
+        for (int i = 0; i < this.grupoSpinner.getCount(); i++) {
+            if (((GrupoStruct) this.grupoSpinner.getItemAtPosition(i)).getId() == this.tarefa.getGrupoId()) {
+                this.position = i;
+                break;
+            }
+        }
+        this.grupoSpinner.post(new Runnable() {
+            @Override
+            public void run() {
+                grupoSpinner.setSelection(position);
+            }
+        });
+
+        this.switchConcluido.setChecked(this.tarefa.getConcluida());
+
+        this.editTextDescricao.setText(this.tarefa.getDescricao());
     }
 
     private boolean isNovaTarefa() {
@@ -160,13 +199,20 @@ public class EdicaoTarefaActivity extends Activity {
     }
 
     private void salvarTarefa() {
-        if(validarDados()){
-            Toast.makeText(this,"Salvar Tarefa Não Implementado", Toast.LENGTH_SHORT).show();
+        if (validarDados()) {
+            this.tarefa.setTitulo(this.tituloEditText.getText().toString());
+            this.tarefa.setVencimento(this.vencimento.getTime());
+            this.tarefa.setGrupo((GrupoStruct) this.grupoSpinner.getSelectedItem());
+            this.tarefa.setConcluida(switchConcluido.isChecked());
+            this.tarefa.setDescricao(this.editTextDescricao.getText().toString());
+
+            this.tarefaGateway.salvar(this.tarefa);
+            NavUtils.navigateUpFromSameTask(this);
         }
     }
 
     private boolean validarDados() {
-        if(this.tituloEditText.getText().toString().equals("")){
+        if (this.tituloEditText.getText().toString().equals("")) {
             this.tituloEditText.setError("Digite um título para a tarefa");
             return false;
         }
