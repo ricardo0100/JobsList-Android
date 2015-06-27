@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.Toast;
 
 import br.com.otes06.jobslist.GatewayRealm.Realms.TarefaRealm;
 import io.realm.Realm;
@@ -82,11 +83,19 @@ public class MainActivity extends Activity implements NavigationDrawerFragment.N
             case 1:
                 fragment = ListaDeGruposFragment.newInstance();
                 break;
-
+            case 2:
+                Toast.makeText(this, "Sincronizando", Toast.LENGTH_SHORT).show();
+                sync();
+                break;
+            case 3:
+                Toast.makeText(this, "Drop DB", Toast.LENGTH_SHORT).show();
+                dropTarefas();
+                break;
         }
 
 
-        fragmentManager.beginTransaction()
+        if (fragment != null)
+            fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
                 .commit();
     }

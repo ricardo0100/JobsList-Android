@@ -24,9 +24,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-import br.com.otes06.jobslist.GatewayDouble.ListagemDeGruposGatewayDouble;
-import br.com.otes06.jobslist.GatewayDouble.ListagemDeTarefasGatewayDouble;
-import br.com.otes06.jobslist.GatewayInterface.IListagemDeTarefasGateway;
+import br.com.otes06.jobslist.GatewayDouble.GruposGatewayDouble;
+import br.com.otes06.jobslist.GatewayInterface.ITarefasGateway;
 import br.com.otes06.jobslist.GatewayRealm.TarefasGatewayRealm;
 import br.com.otes06.jobslist.Structs.GrupoStruct;
 import br.com.otes06.jobslist.Structs.TarefaStruct;
@@ -36,7 +35,7 @@ public class EdicaoTarefaActivity extends Activity {
 
     private int tarefaID;
     private TarefaStruct tarefa = null;
-    private IListagemDeTarefasGateway tarefaGateway;
+    private ITarefasGateway tarefaGateway;
     
     private EditText tituloEditText;
     private TextView vencimentoTextView;
@@ -110,7 +109,7 @@ public class EdicaoTarefaActivity extends Activity {
         List<GrupoStruct> list = new LinkedList<GrupoStruct>();
         list.add(GrupoStruct.SemGrupo());
 
-        list.addAll(new ListagemDeGruposGatewayDouble().buscarTodosOsGrupos());
+        list.addAll(new GruposGatewayDouble().buscarTodosOsGrupos());
 
         ArrayAdapter<GrupoStruct> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

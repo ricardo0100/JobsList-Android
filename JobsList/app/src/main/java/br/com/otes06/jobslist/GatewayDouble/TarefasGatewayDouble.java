@@ -4,10 +4,10 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import br.com.otes06.jobslist.GatewayInterface.IListagemDeTarefasGateway;
+import br.com.otes06.jobslist.GatewayInterface.ITarefasGateway;
 import br.com.otes06.jobslist.Structs.TarefaStruct;
 
-public class ListagemDeTarefasGatewayDouble implements IListagemDeTarefasGateway {
+public class TarefasGatewayDouble implements ITarefasGateway {
 
     @Override
     public List<TarefaStruct> buscarTodasAsTarefas() {
@@ -32,6 +32,11 @@ public class ListagemDeTarefasGatewayDouble implements IListagemDeTarefasGateway
         tarefa.setVencimento(new Date());
 
         return tarefa;
+    }
+
+    @Override
+    public int salvar(TarefaStruct tarefa) {
+        return 0;
     }
 
 }

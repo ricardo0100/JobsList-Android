@@ -108,7 +108,9 @@ public class NavigationDrawerFragment extends Fragment {
                 android.R.id.text1,
                 new String[]{
                         getString(R.string.title_activity_lista_de_tarefas),
-                        getString(R.string.title_activity_lista_de_grupos)
+                        getString(R.string.title_activity_lista_de_grupos),
+                        "Sync",
+                        "Drop DB"
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return layout;

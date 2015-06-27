@@ -4,13 +4,13 @@ import android.content.Context;
 
 import java.util.ArrayList;
 import java.util.List;
-import br.com.otes06.jobslist.GatewayInterface.IListagemDeTarefasGateway;
+import br.com.otes06.jobslist.GatewayInterface.ITarefasGateway;
 import br.com.otes06.jobslist.GatewayRealm.Realms.TarefaRealm;
 import br.com.otes06.jobslist.Structs.TarefaStruct;
 import io.realm.Realm;
 
 
-public class TarefasGatewayRealm implements IListagemDeTarefasGateway {
+public class TarefasGatewayRealm implements ITarefasGateway {
 
     private Context context;
 
@@ -55,23 +55,24 @@ public class TarefasGatewayRealm implements IListagemDeTarefasGateway {
         return tarefa;
     }
 
-    public void salvar(TarefaStruct tarefa) {
+    public int salvar(TarefaStruct tarefa) {
         Realm realm = Realm.getInstance(context);
         realm.beginTransaction();
 
         TarefaRealm registro = new TarefaRealm();
-        int id = tarefa.getId();
-        if (id == 0) {
+        if (tarefa.getId() == 0) {
             int size = ((int) realm.where(TarefaRealm.class).count());
-            id = size + 10000;
+            tarefa.setId(size + 10000);
         }
 
-        registro.setId(id);
+        registro.setId(tarefa.getId());
         registro.setTitulo(tarefa.getTitulo());
         registro.setDescricao(tarefa.getDescricao());
         realm.copyToRealmOrUpdate(registro);
 
         realm.commitTransaction();
         realm.close();
+
+        return tarefa.getId();
     }
 }
