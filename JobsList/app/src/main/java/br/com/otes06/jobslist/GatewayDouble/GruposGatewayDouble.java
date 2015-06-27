@@ -30,4 +30,9 @@ public class GruposGatewayDouble implements IGruposGateway {
 
         return grupo;
     }
+
+    @Override
+    public int salvar(GrupoStruct grupo) {
+        return 0;
+    }
 }

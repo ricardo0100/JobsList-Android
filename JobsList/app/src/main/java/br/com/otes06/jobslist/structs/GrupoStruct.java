@@ -1,10 +1,23 @@
 package br.com.otes06.jobslist.Structs;
 
+import java.util.Date;
+
 public class GrupoStruct {
 
     private int id;
-
     private String nome;
+    private int usuarioId;
+    private Date created;
+    private Date modified;
+    private boolean alteradoLocal;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getNome() {
         return nome;
@@ -14,10 +27,36 @@ public class GrupoStruct {
         this.nome = nome;
     }
 
-    public static GrupoStruct SemGrupo() {
-        GrupoStruct grupo = new GrupoStruct();
-        grupo.setNome("Sem Grupo");
-        return grupo;
+    public int getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(int usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+    public Date getModified() {
+        return modified;
+    }
+
+    public void setModified(Date modified) {
+        this.modified = modified;
+    }
+
+    public boolean isAlteradoLocal() {
+        return alteradoLocal;
+    }
+
+    public void setAlteradoLocal(boolean alteradoLocal) {
+        this.alteradoLocal = alteradoLocal;
     }
 
     @Override
@@ -25,11 +64,9 @@ public class GrupoStruct {
         return getNome();
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public static GrupoStruct SemGrupo() {
+        GrupoStruct grupo = new GrupoStruct();
+        grupo.setNome("Sem Grupo");
+        return grupo;
     }
 }

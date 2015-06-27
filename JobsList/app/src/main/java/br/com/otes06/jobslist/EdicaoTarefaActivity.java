@@ -29,6 +29,7 @@ import java.util.Locale;
 
 import br.com.otes06.jobslist.GatewayDouble.GruposGatewayDouble;
 import br.com.otes06.jobslist.GatewayInterface.ITarefasGateway;
+import br.com.otes06.jobslist.GatewayRealm.GruposGatewayRealm;
 import br.com.otes06.jobslist.GatewayRealm.TarefasGatewayRealm;
 import br.com.otes06.jobslist.Structs.GrupoStruct;
 import br.com.otes06.jobslist.Structs.TarefaStruct;
@@ -129,7 +130,7 @@ public class EdicaoTarefaActivity extends Activity {
         List<GrupoStruct> list = new LinkedList<>();
         list.add(GrupoStruct.SemGrupo());
 
-        list.addAll(new GruposGatewayDouble().buscarTodosOsGrupos());
+        list.addAll(new GruposGatewayRealm(this).buscarTodosOsGrupos());
 
         ArrayAdapter<GrupoStruct> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, list);
         dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
