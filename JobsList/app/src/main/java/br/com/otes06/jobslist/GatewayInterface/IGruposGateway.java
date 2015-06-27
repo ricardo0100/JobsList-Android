@@ -11,4 +11,6 @@ public interface IGruposGateway {
     List<GrupoStruct> buscarTodosOsGrupos();
 
     GrupoStruct buscarPoId(int id);
+
+    int salvar(GrupoStruct grupo);
 }

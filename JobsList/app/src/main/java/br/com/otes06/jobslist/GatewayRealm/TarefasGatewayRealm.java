@@ -80,7 +80,7 @@ public class TarefasGatewayRealm implements ITarefasGateway {
         registro.setTitulo(tarefa.getTitulo());
         registro.setDescricao(tarefa.getDescricao());
         registro.setConcluida(tarefa.getConcluida());
-        registro.setGrupoId(tarefa.getUsuarioId());
+        registro.setGrupoId(tarefa.getGrupoId());
         registro.setUsuarioId(tarefa.getUsuarioId());
         registro.setVencimento(tarefa.getVencimento());
         registro.setCreated(tarefa.getCreated());
