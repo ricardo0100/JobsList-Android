@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 public class AlarmesActivity extends Activity {
@@ -35,6 +36,9 @@ public class AlarmesActivity extends Activity {
                 intent.putExtra("tarefaID", getIntent().getIntExtra("tarefaID", 0));
                 startActivity(intent);
                 return true;
+            case R.id.action_novo_alarme:
+                Toast.makeText(this, "Implementar", Toast.LENGTH_SHORT).show();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
