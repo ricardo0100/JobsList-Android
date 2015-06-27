@@ -33,34 +33,55 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Vencimento"
-        android:id="@+id/vencimentoTextView"
+        android:id="@+id/labelVencimentoTextView"
         android:layout_below="@+id/tituloEditText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="30dp" />
 
-    <EditText
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="time"
-        android:ems="10"
-        android:id="@+id/vencimentoEditText"
-        android:layout_below="@+id/vencimentoTextView"
+        android:textSize="18sp"
+        android:id="@+id/vencimentoTextView"
+        android:layout_below="@+id/labelVencimentoTextView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:text="04/07/1988"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Definir Data"
+        android:id="@+id/buttonDefinirData"
+        android:layout_below="@+id/vencimentoTextView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Definir Hora"
+        android:id="@+id/buttonDefinirHora"
+        android:layout_alignTop="@+id/buttonDefinirData"
+        android:layout_toRightOf="@+id/buttonDefinirData"
+        android:layout_toEndOf="@+id/buttonDefinirData" />
 
     <Spinner
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/spinnerGrupo"
-        android:layout_marginTop="30dp"
-        android:layout_below="@+id/vencimentoEditText"
+        android:layout_below="@+id/buttonDefinirHora"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/vencimentoEditText"
-        android:layout_alignEnd="@+id/vencimentoEditText" />
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="30dp"/>
 
     <Switch
         android:layout_width="wrap_content"
@@ -70,8 +91,8 @@
         android:layout_below="@+id/spinnerGrupo"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="30dp"
-        android:checked="false" />
+        android:checked="false"
+        android:layout_marginTop="30dp"/>
 
 
 </RelativeLayout>

@@ -2,18 +2,24 @@ package br.com.otes06.jobslist;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
@@ -30,10 +36,28 @@ public class EdicaoTarefaActivity extends Activity {
     private int tarefaID;
     private TarefaStruct tarefa = null;
     private IListagemDeTarefasGateway tarefaGateway;
-
+    
     private EditText tituloEditText;
-    private EditText vencimentoEditText;
+    private TextView vencimentoTextView;
+    private Button botaoDefinirData;
+    private Button botaoDefinirHora;
     private Spinner grupoSpinner;
+
+    private TimePickerDialog.OnTimeSetListener timePickerListener = new TimePickerDialog.OnTimeSetListener() {
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+
+        }
+    };
+
+    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+
+        }
+    };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +67,36 @@ public class EdicaoTarefaActivity extends Activity {
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+        this.tituloEditText = (EditText) findViewById(R.id.tituloEditText);
+        this.vencimentoTextView = (TextView) findViewById(R.id.vencimentoTextView);
+        this.botaoDefinirData = (Button) findViewById(R.id.buttonDefinirData);
+        this.botaoDefinirHora = (Button) findViewById(R.id.buttonDefinirHora);
+        this.grupoSpinner = (Spinner) findViewById(R.id.spinnerGrupo);
 
         configurarStruct();
 
-        this.tituloEditText = (EditText) findViewById(R.id.tituloEditText);
-        this.vencimentoEditText = (EditText) findViewById(R.id.vencimentoEditText);
-        this.grupoSpinner = (Spinner) findViewById(R.id.spinnerGrupo);
+        configurarDatePickerVencimento();
+        configurarTimePickerVencimento();
 
         atualizarDados();
+    }
+
+    private void configurarDatePickerVencimento() {
+        this.botaoDefinirData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DatePickerDialog(v.getContext(), datePickerListener, 1999, 07, 04).show();
+            }
+        });
+    }
+
+    private void configurarTimePickerVencimento() {
+        this.botaoDefinirHora.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new TimePickerDialog(v.getContext(), timePickerListener, 19, 00, true).show();
+            }
+        });
     }
 
     private void atualizarDados() {
@@ -70,9 +116,11 @@ public class EdicaoTarefaActivity extends Activity {
         this.grupoSpinner.setAdapter(dataAdapter);
 
         this.tituloEditText.setText(titulo);
-        this.vencimentoEditText.setText(vencimento);
+        this.vencimentoTextView.setText(vencimento);
 
     }
+
+
 
     private void configurarStruct() {
         this.tarefaGateway = new ListagemDeTarefasGatewayDouble(); //TODO
