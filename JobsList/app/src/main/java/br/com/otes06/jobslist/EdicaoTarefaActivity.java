@@ -106,9 +106,23 @@ public class EdicaoTarefaActivity extends Activity {
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
             case R.id.action_salvarTarefa:
-                Toast.makeText(this, "Hey!", Toast.LENGTH_SHORT).show();
+                salvarTarefa();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void salvarTarefa() {
+        if(validarDados()){
+            Toast.makeText(this,"Salvar Tarefa Não Implementado", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean validarDados() {
+        if(this.tituloEditText.getText().toString().equals("")){
+            this.tituloEditText.setError("Digite um título para a tarefa");
+            return false;
+        }
+        return true;
     }
 
 }
