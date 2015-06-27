@@ -73,7 +73,6 @@ public class EdicaoTarefaActivity extends Activity {
         carregarSpinnerGrupos();
 
         carregarDados();
-        carregarDados();
 
         configurarDatePickerVencimento();
         configurarTimePickerVencimento();
@@ -159,7 +158,9 @@ public class EdicaoTarefaActivity extends Activity {
         this.tarefaID = intent.getIntExtra("tarefaID", 0);
 
         if (this.isNovaTarefa()) {
-            this.tarefa = new TarefaStruct();
+            TarefaStruct tarefa = new TarefaStruct();
+            tarefa.setVencimento(null);
+            this.tarefa = tarefa;
         } else {
             this.tarefa = this.tarefaGateway.buscarPoId(tarefaID);
         }
@@ -169,7 +170,8 @@ public class EdicaoTarefaActivity extends Activity {
 
         if (this.vencimento == null)
             this.vencimento = Calendar.getInstance();
-        this.vencimento.setTime(this.tarefa.getVencimento());
+        if(this.tarefa.getVencimento() != null)
+            this.vencimento.setTime(this.tarefa.getVencimento());
         atualizarLabelVencimento(this.vencimento.getTime());
 
         this.position = 0;

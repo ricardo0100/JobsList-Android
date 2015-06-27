@@ -8,13 +8,13 @@ public class TarefaStruct {
     private String titulo;
     private String descricao;
     private Date vencimento;
-    private Boolean concluida;
+    private boolean concluida;
     private GrupoStruct grupo = null;
     private int grupoId;
     private int usuarioId;
     private Date created;
     private Date modified;
-    private Boolean alteradoLocal;
+    private boolean alteradoLocal;
 
     public int getId() {
         return id;
@@ -60,7 +60,7 @@ public class TarefaStruct {
         return concluida;
     }
 
-    public void setConcluida(Boolean concluida) {
+    public void setConcluida(boolean concluida) {
         this.concluida = concluida;
     }
 
@@ -88,7 +88,7 @@ public class TarefaStruct {
         this.modified = modified;
     }
 
-    public Boolean getAlteradoLocal() {
+    public boolean getAlteradoLocal() {
         return alteradoLocal;
     }
 
