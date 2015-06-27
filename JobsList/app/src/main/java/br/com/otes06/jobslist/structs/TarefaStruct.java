@@ -102,5 +102,6 @@ public class TarefaStruct {
 
     public void setGrupo(GrupoStruct grupo) {
         this.grupo = grupo;
+        this.setGrupoId(grupo.getId());
     }
 }
