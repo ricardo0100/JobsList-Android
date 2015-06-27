@@ -9,6 +9,7 @@ public class TarefaStruct {
     private String descricao;
     private Date vencimento;
     private Boolean concluida;
+    private GrupoStruct grupo = null;
     private int grupoId;
     private int usuarioId;
     private Date created;
@@ -93,5 +94,13 @@ public class TarefaStruct {
 
     public void setAlteradoLocal(Boolean alteradoLocal) {
         this.alteradoLocal = alteradoLocal;
+    }
+
+    public GrupoStruct getGrupo() {
+        return grupo;
+    }
+
+    public void setGrupo(GrupoStruct grupo) {
+        this.grupo = grupo;
     }
 }

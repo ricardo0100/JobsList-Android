@@ -81,7 +81,10 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
                     TarefaStruct tarefaStruct = new TarefaStruct();
                     tarefaStruct.setId(jsonRegistro.getInt("id"));
                     tarefaStruct.setTitulo(jsonRegistro.getString("titulo"));
-                    tarefaStruct.setDescricao(jsonRegistro.getString("concluida"));
+                    tarefaStruct.setDescricao(jsonRegistro.getString("descricao"));
+                    tarefaStruct.setConcluida(jsonRegistro.getBoolean("concluida"));
+                    tarefaStruct.setGrupoId(jsonRegistro.optInt("grupo", 0));
+                    tarefaStruct.setUsuarioId(jsonRegistro.optInt("usuario", 0));
                     int id = tarefasGateway.salvar(tarefaStruct);
                 }
             }

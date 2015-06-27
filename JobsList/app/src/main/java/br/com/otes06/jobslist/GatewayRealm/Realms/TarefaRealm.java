@@ -12,13 +12,13 @@ public class TarefaRealm extends RealmObject{
     private int id;
     private String titulo;
     private String descricao;
-    private Boolean concluida;
+    private boolean concluida;
     private int grupoId;
     private int usuarioId;
     private Date vencimento;
     private Date created;
     private Date modified;
-    private Boolean alteradoLocal;
+    private boolean alteradoLocal;
 
     public int getId() {
         return id;
@@ -52,11 +52,11 @@ public class TarefaRealm extends RealmObject{
         this.vencimento = vencimento;
     }
 
-    public Boolean getConcluida() {
+    public boolean getConcluida() {
         return concluida;
     }
 
-    public void setConcluida(Boolean concluida) {
+    public void setConcluida(boolean concluida) {
         this.concluida = concluida;
     }
 
@@ -92,11 +92,11 @@ public class TarefaRealm extends RealmObject{
         this.modified = modified;
     }
 
-    public Boolean getAlteradoLocal() {
+    public boolean getAlteradoLocal() {
         return alteradoLocal;
     }
 
-    public void setAlteradoLocal(Boolean alteradoLocal) {
+    public void setAlteradoLocal(boolean alteradoLocal) {
         this.alteradoLocal = alteradoLocal;
     }
 }
